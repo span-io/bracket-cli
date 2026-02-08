@@ -44,26 +44,26 @@ class BinaryComponent:
 WINDOWS_TARGETS = tuple(target for target in BINARY_TARGETS if "windows" in target)
 
 BINARY_COMPONENTS = {
-    "codex": BinaryComponent(
-        artifact_prefix="codex",
-        dest_dir="codex",
-        binary_basename="codex",
+    "bracket": BinaryComponent(
+        artifact_prefix="bracket",
+        dest_dir="bracket",
+        binary_basename="bracket",
     ),
-    "codex-responses-api-proxy": BinaryComponent(
-        artifact_prefix="codex-responses-api-proxy",
-        dest_dir="codex-responses-api-proxy",
-        binary_basename="codex-responses-api-proxy",
+    "bracket-responses-api-proxy": BinaryComponent(
+        artifact_prefix="bracket-responses-api-proxy",
+        dest_dir="bracket-responses-api-proxy",
+        binary_basename="bracket-responses-api-proxy",
     ),
-    "codex-windows-sandbox-setup": BinaryComponent(
-        artifact_prefix="codex-windows-sandbox-setup",
-        dest_dir="codex",
-        binary_basename="codex-windows-sandbox-setup",
+    "bracket-windows-sandbox-setup": BinaryComponent(
+        artifact_prefix="bracket-windows-sandbox-setup",
+        dest_dir="bracket",
+        binary_basename="bracket-windows-sandbox-setup",
         targets=WINDOWS_TARGETS,
     ),
-    "codex-command-runner": BinaryComponent(
-        artifact_prefix="codex-command-runner",
-        dest_dir="codex",
-        binary_basename="codex-command-runner",
+    "bracket-command-runner": BinaryComponent(
+        artifact_prefix="bracket-command-runner",
+        dest_dir="bracket",
+        binary_basename="bracket-command-runner",
         targets=WINDOWS_TARGETS,
     ),
 }
@@ -135,8 +135,8 @@ def parse_args() -> argparse.Namespace:
         choices=tuple(list(BINARY_COMPONENTS) + ["rg"]),
         help=(
             "Limit installation to the specified components."
-            " May be repeated. Defaults to codex, codex-windows-sandbox-setup,"
-            " codex-command-runner, and rg."
+            " May be repeated. Defaults to bracket, bracket-windows-sandbox-setup,"
+            " bracket-command-runner, and rg."
         ),
     )
     parser.add_argument(
@@ -159,9 +159,9 @@ def main() -> int:
     vendor_dir.mkdir(parents=True, exist_ok=True)
 
     components = args.components or [
-        "codex",
-        "codex-windows-sandbox-setup",
-        "codex-command-runner",
+        "bracket",
+        "bracket-windows-sandbox-setup",
+        "bracket-command-runner",
         "rg",
     ]
 
@@ -173,7 +173,7 @@ def main() -> int:
     print(f"Downloading native artifacts from workflow {workflow_id}...")
 
     with _gha_group(f"Download native artifacts from workflow {workflow_id}"):
-        with tempfile.TemporaryDirectory(prefix="codex-native-artifacts-") as artifacts_dir_str:
+        with tempfile.TemporaryDirectory(prefix="bracket-native-artifacts-") as artifacts_dir_str:
             artifacts_dir = Path(artifacts_dir_str)
             _download_artifacts(workflow_id, artifacts_dir)
             install_binary_components(

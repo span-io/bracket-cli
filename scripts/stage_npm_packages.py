@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stage one or more Codex npm packages for release."""
+"""Stage one or more Bracket npm packages for release."""
 
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ INSTALL_NATIVE_DEPS = REPO_ROOT / "codex-cli" / "scripts" / "install_native_deps
 WORKFLOW_NAME = ".github/workflows/rust-release.yml"
 GITHUB_REPO = "span-io/bracket-cli"
 
-_SPEC = importlib.util.spec_from_file_location("codex_build_npm_package", BUILD_SCRIPT)
+_SPEC = importlib.util.spec_from_file_location("bracket_build_npm_package", BUILD_SCRIPT)
 if _SPEC is None or _SPEC.loader is None:
     raise RuntimeError(f"Unable to load module from {BUILD_SCRIPT}")
 _BUILD_MODULE = importlib.util.module_from_spec(_SPEC)
@@ -142,7 +142,7 @@ def main() -> int:
             workflow_url, resolved_head_sha = resolve_workflow_url(
                 args.release_version, args.workflow_url
             )
-            vendor_temp_root = Path(tempfile.mkdtemp(prefix="npm-native-", dir=runner_temp))
+            vendor_temp_root = Path(tempfile.mkdtemp(prefix="bracket-npm-native-", dir=runner_temp))
             install_native_components(workflow_url, native_components, vendor_temp_root)
             vendor_src = vendor_temp_root / "vendor"
 
@@ -150,7 +150,7 @@ def main() -> int:
             print(f"should `git checkout {resolved_head_sha}`")
 
         for package in packages:
-            staging_dir = Path(tempfile.mkdtemp(prefix=f"npm-stage-{package}-", dir=runner_temp))
+            staging_dir = Path(tempfile.mkdtemp(prefix=f"bracket-npm-stage-{package}-", dir=runner_temp))
             pack_output = output_dir / f"{package}-npm-{args.release_version}.tgz"
 
             cmd = [

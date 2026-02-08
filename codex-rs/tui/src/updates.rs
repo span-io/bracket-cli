@@ -80,16 +80,6 @@ fn read_version_info(version_file: &Path) -> anyhow::Result<VersionInfo> {
 
 async fn check_for_update(version_file: &Path) -> anyhow::Result<()> {
     let latest_version = match update_action::get_update_action() {
-        Some(UpdateAction::BrewUpgrade) => {
-            let HomebrewCaskInfo { version } = create_client()
-                .get(HOMEBREW_CASK_API_URL)
-                .send()
-                .await?
-                .error_for_status()?
-                .json::<HomebrewCaskInfo>()
-                .await?;
-            version
-        }
         _ => {
             let ReleaseInfo {
                 tag_name: latest_tag_name,

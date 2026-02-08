@@ -61,8 +61,8 @@ if (!targetTriple) {
 
 const vendorRoot = path.join(__dirname, "..", "vendor");
 const archRoot = path.join(vendorRoot, targetTriple);
-const codexBinaryName = process.platform === "win32" ? "bracket.exe" : "bracket";
-const binaryPath = path.join(archRoot, "bracket", codexBinaryName);
+const bracketBinaryName = process.platform === "win32" ? "bracket.exe" : "bracket";
+const binaryPath = path.join(archRoot, "bracket", bracketBinaryName);
 
 // Use an asynchronous spawn instead of spawnSync so that Node is able to
 // respond to signals (e.g. Ctrl-C / SIGINT) while the native binary is
@@ -81,7 +81,7 @@ function getUpdatedPath(newDirs) {
 }
 
 /**
- * Use heuristics to detect the package manager that was used to install Codex
+ * Use heuristics to detect the package manager that was used to install Bracket
  * in order to give the user a hint about how to update it.
  */
 function detectPackageManager() {
@@ -115,8 +115,8 @@ const updatedPath = getUpdatedPath(additionalDirs);
 const env = { ...process.env, PATH: updatedPath };
 const packageManagerEnvVar =
   detectPackageManager() === "bun"
-    ? "CODEX_MANAGED_BY_BUN"
-    : "CODEX_MANAGED_BY_NPM";
+    ? "BRACKET_MANAGED_BY_BUN"
+    : "BRACKET_MANAGED_BY_NPM";
 env[packageManagerEnvVar] = "1";
 
 const child = spawn(binaryPath, process.argv.slice(2), {

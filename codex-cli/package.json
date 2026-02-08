@@ -2,8 +2,10 @@
   "name": "@span-io/bracket",
   "version": "0.0.0-dev",
   "license": "Apache-2.0",
+  "private": false,
+  "description": "The AI-native terminal agent.",
   "bin": {
-    "bracket": "bin/codex.js"
+    "bracket": "bin/bracket.js"
   },
   "type": "module",
   "engines": {
